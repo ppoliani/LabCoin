@@ -20,7 +20,7 @@ class Balance extends Component {
 
   renderTxnText({args}) {
     return (
-      <div>Bought {args.tokens} LABCoins for {args.buyPrices} ETH</div>
+      <div>Bought {args.tokens} LABCoins for {args.buyPrice} ETH</div>
     )
   }
 
@@ -61,7 +61,6 @@ class Balance extends Component {
   renderForm() {
     return (
       <div>
-        <span>Select the amount of ETH you would like to exchange for LabCoin</span>
         <br/>
         <TextField 
           hintText='Enter your address'
@@ -80,7 +79,6 @@ class Balance extends Component {
 
     return (
       <div className='page'>
-        <h1>Purchase Tokens</h1>
         <Countdown endtime={new Date('11/30/2017')}/>
         {this.renderForm()}
         {

@@ -3,7 +3,7 @@ const getContract = require('../abi/labCoinAbi')
 const {listenToEvents} = require('../events/labCoinEvents')
 const getWeb3 = require('../index')
 
-const CONTRACT_ADDR = '0xb39f9ef5ffde6782c8d7b1639cf15cade06bdd75';
+const CONTRACT_ADDR = '0xee92b8f67d21ccfdca5e2b33c6856f9b9a327bdf';
 const contract = getContract().at(CONTRACT_ADDR);
 
 listenToEvents(contract);
