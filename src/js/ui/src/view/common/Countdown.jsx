@@ -53,7 +53,7 @@ class Countdown extends Component {
     return (
       <div>
         <h1>{title}</h1>
-        <div class='clockdiv'>
+        <div className='clockdiv'>
           <div>
             <span className='days'>{days}</span>
             <div className='smalltext'>Days</div>

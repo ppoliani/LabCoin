@@ -11,7 +11,7 @@ const TOKEN_URL = 'http://localhost:5000/tokens';
 export const purchaseTokensRoot = fetch => {
   return createAction(
     PURCHASE_TOKENS,
-    partial(fetch, 'POST', PROOF_URL)
+    partial(fetch, 'POST', TOKEN_URL)
   );
 }
 

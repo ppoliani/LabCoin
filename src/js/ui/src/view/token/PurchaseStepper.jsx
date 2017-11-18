@@ -15,18 +15,28 @@ class PurchaseStepper extends Component {
   state = {
     finished: false,
     stepIndex: 0,
+    ethAmount: ''
   };
+
+  handlePurchase() {
+
+  }
 
   handleAmountChange = (e, value) => {
     this.setState(Object.assign({}, {ethAmount: `${value}`}));
   }
 
   handleNext = () => {
-    const {stepIndex} = this.state;
+    const {stepIndex, ethAmount} = this.state;
+
     this.setState({
       stepIndex: stepIndex + 1,
       finished: stepIndex >= 2,
     });
+
+    if(stepIndex === 2) {
+      this.props.onPurchase({ethAmount});
+    }
   };
 
   handlePrev = () => {
@@ -52,9 +62,9 @@ class PurchaseStepper extends Component {
     const {ethAmount} = this.state;
 
     return (
-      <p>
+      <div>
         <span>You will receive {LAB_COINT_PRICE * Number(ethAmount)} LABCoins</span>
-      </p>
+      </div>
     )
   }
 
@@ -72,7 +82,7 @@ class PurchaseStepper extends Component {
   renderResetBox() {
     return (
       <div>
-        <p>Transaction successfully submitted</p>
+        <div>Transaction successfully submitted</div>
         Check your 
         <a href="#"
           onClick={(event) => {
@@ -92,7 +102,7 @@ class PurchaseStepper extends Component {
       ? this.renderResetBox()
       : (
         <div>
-          <p>{this.getStepContent(stepIndex)}</p>
+          <div>{this.getStepContent(stepIndex)}</div>
           <div style={{marginTop: 12}}>
             <FlatButton
               label="Back"
