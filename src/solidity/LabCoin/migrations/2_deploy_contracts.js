@@ -1,4 +1,4 @@
-const AroraERC20 = artifacts.require('./AroraERC20.sol');
+const LabCoinERC20 = artifacts.require('./LabCoinERC20.sol');
 module.exports = (deployer) => {
-  deployer.deploy(AroraERC20, 100000, 'ARORACoin', 'ARC', 2, 500); 
+  deployer.deploy(LabCoinERC20, 100000, 'LABCoin', 'LABCoin', 2, 500); 
 };

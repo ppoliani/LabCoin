@@ -5,7 +5,7 @@ import "./Owned.sol";
 import "./TokenRecipient.sol";
 import "./ERC20Interface.sol";
 
-contract AroraERC20 is ERC20Interface, Owned {
+contract LabCoinERC20 is ERC20Interface, Owned {
   string public name;
   string public symbol;
   uint8 public decimals = 2;
@@ -30,7 +30,7 @@ contract AroraERC20 is ERC20Interface, Owned {
   event LogFrozenAccount(address target, bool isFrozen);
   event LogApproval(address indexed owner, address indexed spender, uint256 value);
   
-  function AroraERC20(uint256 _supply, string _token, string _symbol, uint8 _decimals) public {
+  function LabCoinERC20(uint256 _supply, string _token, string _symbol, uint8 _decimals) public {
     decimals = _decimals;
     name = _token;
     symbol = _symbol;
