@@ -24,11 +24,8 @@ class PurchaseStepper extends Component {
   }
 
   submitIfNeeded() {
-    const {stepIndex, ethAmount} = this.state;
-
-    if(stepIndex === 2) {
-      this.props.onPurchase({ethAmount});
-    }
+    const {ethAmount} = this.state;
+    this.props.onPurchase({ethAmount});
   }
 
   handleNext = () => {
@@ -37,7 +34,7 @@ class PurchaseStepper extends Component {
     this.setState({
       stepIndex: stepIndex + 1,
       finished: stepIndex >= 2,
-    }, this.submitIfNeeded);
+    }, () => stepIndex === 2 ? this.submitIfNeeded() : () => {});
   };
 
   handlePrev = () => {
@@ -89,15 +86,10 @@ class PurchaseStepper extends Component {
           <li>Address: {data.address}</li>
         </ul>
         <br/>
+        <div>Please copy the your public address.</div>
+        <br/>
         <span>Check your</span> 
-        <a href="#"
-          onClick={(event) => {
-            event.preventDefault();
-            window.location.href = '/balance';
-          }}
-        > Balance. 
-        </a>
-        Please copy the your public address.
+        <a href="/balance"> Balance.</a>
       </div>
     )
   }
