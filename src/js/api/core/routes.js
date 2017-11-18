@@ -1,7 +1,7 @@
 const entries = require('../helpers/entries');
 
 const routes = [
-  require('../token/tokenRoutes')
+  require('../endpoints/token/tokenRoutes')
 ];
 
 const setup = router => {
