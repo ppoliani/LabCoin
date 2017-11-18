@@ -16,11 +16,6 @@ contract LabCoinERC20 is ERC20Interface, Owned {
   // ICO related prop
   uint256 public endTime;
 
-  // If our clients have not enough ethers in their account they won't be able to call some of the methods
-  // of this contract. Ideally we don't wont our users to be worried about ethers or blockchain etc.
-  // Instead we can auto refill users balance as soon as it detects the balance is low.
-  uint256 private minBalanceForAccounts = 5 finney; // 0.005 ether
-
   mapping (address => uint256) public balanceOf;
   mapping (address => bool) public frozenAccounts;
   mapping (address => mapping (address => uint256)) public allowance;
@@ -55,13 +50,6 @@ contract LabCoinERC20 is ERC20Interface, Owned {
     return true;
   }
 
-  function _autoRefillIfNeed() internal {
-    if(msg.sender.balance < minBalanceForAccounts) {
-      // sell the following amount so you can fund the execution of the invoked method
-      sell((minBalanceForAccounts - msg.sender.balance) / sellPrice);
-    }
-  }
-
   function totalSupply() public constant returns (uint256) {
     return supply;
   }
@@ -83,7 +71,6 @@ contract LabCoinERC20 is ERC20Interface, Owned {
   /// @param to The address of the recipient
   /// @param value the amount to send
   function transfer(address to, uint256 value) public returns (bool) {
-    _autoRefillIfNeed();
     return _transfer(msg.sender, to, value);
   }
 
@@ -165,11 +152,6 @@ contract LabCoinERC20 is ERC20Interface, Owned {
     require(msg.sender.send(revenue)); 
     LogTransfer(msg.sender, this, amount);
     return revenue;
-  }
-
-  /// @notice Set the min balance to `minimumBalanceInFinney`
-  function setMinBalance(uint256 minimumBalanceInFinney) public onlyOwner {
-    minBalanceForAccounts = minimumBalanceInFinney * 1 finney;
   }
 
   // ICO related code
