@@ -19,13 +19,14 @@ const purchaseTokens = async (web3, labCoinContract, ctx) => {
   }
 }
 
-const getTokenBalance = async (labCoinContract, ctx) => {
+const getTokenBalance = async (labCoinContract, getLogs, ctx) => {
   const {address} = ctx.query;
   const getBalanceOf = promisify(labCoinContract.balanceOf);
   
   try {
     const balance = await getBalanceOf(address);
-    ctx.body = {balance: balance.toString(10)};
+    const logs = await getLogs(labCoinContract, address);
+    ctx.body = {logs, balance: balance.toString(10)};
   }
   catch(error) {
     ctx.body = HttpError(500, 'Error');

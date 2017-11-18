@@ -155,7 +155,7 @@ contract LabCoinERC20 is ERC20Interface, Owned {
   }
 
   // ICO related code
-  event LogICOTxn(address indexed recipient, uint256 amount, uint256 buyPrice);
+  event LogICOTxn(address indexed recipient, uint256 tokens, uint256 buyPrice);
 
   function setEndtime(uint256 _endTime) public returns(bool) {
     endTime = _endTime;
