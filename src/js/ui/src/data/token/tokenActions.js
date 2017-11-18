@@ -27,4 +27,4 @@ export const getBalanceRoot = fetch => {
 
 
 export const purchaseTokens = partial(purchaseTokensRoot, fetch)
-export const getBalanceRoot = partial(getBalance, fetch)
+export const getBalance = partial(getBalanceRoot, fetch)
