@@ -17,11 +17,7 @@ class PurchaseStepper extends Component {
     stepIndex: 0,
     ethAmount: ''
   };
-
-  handlePurchase() {
-
-  }
-
+  
   handleAmountChange = (e, value) => {
     this.setState(Object.assign({}, {ethAmount: `${value}`}));
   }

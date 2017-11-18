@@ -11,7 +11,7 @@ const TOKEN_URL = 'http://localhost:5000/tokens';
 export const purchaseTokensRoot = fetch => {
   return createAction(
     PURCHASE_TOKENS,
-    partial(fetch, 'POST', TOKEN_URL)
+    partial(fetch, TOKEN_URL, 'POST')
   );
 }
 
@@ -26,5 +26,5 @@ export const getBalanceRoot = fetch => {
 }
 
 
-export const purchaseTokens = partial(purchaseTokensRoot, fetch)
-export const getBalance = partial(getBalanceRoot, fetch)
+export const purchaseTokens = purchaseTokensRoot(fetch)
+export const getBalance = getBalanceRoot(fetch)
