@@ -3,11 +3,11 @@ const {HttpError} = require('../../core/api')
 const {getAccountAddress} = require('../../helpers/account')
 
 const purchaseTokens = async (web3, labCoinContract, ctx) => {
-  const {value=1} = ctx.request.body;
+  const {value} = ctx.request.body;
   const address = getAccountAddress();
   const options = {
     from: address,
-    value 
+    value
   }
 
   try {

@@ -13,12 +13,25 @@ export const constructUrl = (url, params) =>
       .join('&')
   }
   `
+
+
+const getAuthHeader = (auth, bearerToken) => auth
+  ? {
+      'content-type': 'application/json',
+      'Authorization': `Bearer ${bearerToken}`
+    }
+: {}
+
 export default (url, method='GET', body={}, auth=true, headers={}) =>
   task(async resolver => {
     try {
       const options = {
         method,
-        headers
+        headers: Object.assign(
+          {},
+          getAuthHeader(auth, ''),
+          headers
+        )
       };
 
       // dissalow body inclusion for methods that don't support it

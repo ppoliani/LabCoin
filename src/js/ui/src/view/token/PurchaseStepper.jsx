@@ -25,7 +25,7 @@ class PurchaseStepper extends Component {
 
   submitIfNeeded() {
     const {ethAmount} = this.state;
-    this.props.onPurchase({ethAmount});
+    this.props.onPurchase({value: ethAmount});
   }
 
   handleNext = () => {
