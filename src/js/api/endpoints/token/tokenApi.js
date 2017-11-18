@@ -2,7 +2,7 @@ const {promisify} = require('util')
 const {HttpError} = require('../../core/api')
 const {getAccountPubKey} = require('../../helpers/account')
 
-const purchaseTokens = async (web3, labCoinContract, ctx, next) => {
+const purchaseTokens = async (web3, labCoinContract, ctx) => {
   const {amount} = ctx.request.body;
   const sendTransaction = promisify(labCoinContract.set.sendTransaction);
   const options = {
@@ -18,7 +18,7 @@ const purchaseTokens = async (web3, labCoinContract, ctx, next) => {
   }
 }
 
-const getTokenBalance = async (labCoinContract, ctx, next) => {
+const getTokenBalance = async (labCoinContract, ctx) => {
   const {pubKey} = ctx.query;
   throw 'Not Implemented'
   ctx.body = {};

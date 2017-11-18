@@ -11,12 +11,12 @@ const TOKEN_URL = 'http://localhost:5000/tokens';
 export const purchaseTokensRoot = fetch => {
   return createAction(
     PURCHASE_TOKENS,
-    partial(fetch, TOKEN_URL, 'POST')
+    partial(fetch, `${TOKEN_URL}/purchase`, 'POST')
   );
 }
 
 export const getBalanceRoot = fetch => {
-  const getUrl = pubKey => constructUrl(TOKEN_URL, Map({pubKey}));
+  const getUrl = pubKey => constructUrl(`${TOKEN_URL}/balance`, Map({pubKey}));
   const fetchData = (fetch) ['∘'] (getUrl);
 
   return createAction(
