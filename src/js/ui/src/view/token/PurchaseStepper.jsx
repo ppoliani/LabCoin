@@ -1,13 +1,14 @@
-import React, {Component} from 'react';
+import React, {Component} from 'react'
 import {
   Step,
   Stepper,
   StepLabel
-} from 'material-ui/Stepper';
-import ArrowForwardIcon from 'material-ui/svg-icons/navigation/arrow-forward';
-import RaisedButton from 'material-ui/RaisedButton';
-import FlatButton from 'material-ui/FlatButton';
-import TextField from 'material-ui/TextField';
+} from 'material-ui/Stepper'
+import ArrowForwardIcon from 'material-ui/svg-icons/navigation/arrow-forward'
+import RaisedButton from 'material-ui/RaisedButton'
+import FlatButton from 'material-ui/FlatButton'
+import TextField from 'material-ui/TextField'
+import Spinner from '../common/Spinner'
 
 const LAB_COINT_PRICE = 500;
 
@@ -19,20 +20,24 @@ class PurchaseStepper extends Component {
   };
   
   handleAmountChange = (e, value) => {
-    this.setState(Object.assign({}, {ethAmount: `${value}`}));
+    this.setState(Object.assign({}, this.state, {ethAmount: `${value}`}));
   }
 
-  handleNext = () => {
+  submitIfNeeded() {
     const {stepIndex, ethAmount} = this.state;
-
-    this.setState({
-      stepIndex: stepIndex + 1,
-      finished: stepIndex >= 2,
-    });
 
     if(stepIndex === 2) {
       this.props.onPurchase({ethAmount});
     }
+  }
+
+  handleNext = () => {
+    const {stepIndex} = this.state;
+
+    this.setState({
+      stepIndex: stepIndex + 1,
+      finished: stepIndex >= 2,
+    }, this.submitIfNeeded);
   };
 
   handlePrev = () => {
@@ -75,9 +80,45 @@ class PurchaseStepper extends Component {
     }
   }
 
-  renderResetBox() {
+  renderTxnResult({data}) {
     return (
       <div>
+        <h3>Transaction successfully submitted</h3> 
+        <ul>
+          <li>Transaction Hash: {data.txnHash}</li>
+          <li>Address: {data.address}</li>
+        </ul>
+        <br/>
+        <span>Check your</span> 
+        <a href="#"
+          onClick={(event) => {
+            event.preventDefault();
+            window.location.href = '/balance';
+          }}
+        > Balance. 
+        </a>
+        Please copy the your public address.
+      </div>
+    )
+  }
+
+  renderTxnFailure() {
+    return (
+      <div>An unexpected error has occured. Please contant the support team.</div>
+    )
+  }
+
+  renderLastStep() {
+    return this.props.purchaseResult.matchWith({
+      Empty: () => {},
+      Loading: () => <Spinner />,
+      Success: this.renderTxnResult,
+      Failure: this.renderTxnFailure
+    });
+
+    return (
+      <div>
+        <div></div>
         <div>Transaction successfully submitted</div>
         Check your 
         <a href="#"
@@ -95,7 +136,7 @@ class PurchaseStepper extends Component {
     const {finished, stepIndex} = this.state;
 
     return finished
-      ? this.renderResetBox()
+      ? this.renderLastStep()
       : (
         <div>
           <div>{this.getStepContent(stepIndex)}</div>
