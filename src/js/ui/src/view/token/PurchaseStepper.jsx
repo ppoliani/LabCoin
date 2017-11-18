@@ -9,6 +9,8 @@ import RaisedButton from 'material-ui/RaisedButton';
 import FlatButton from 'material-ui/FlatButton';
 import TextField from 'material-ui/TextField';
 
+const LAB_COINT_PRICE = 500;
+
 class PurchaseStepper extends Component {
   state = {
     finished: false,
@@ -46,20 +48,31 @@ class PurchaseStepper extends Component {
     )
   }
 
+  renderSummary() {
+    const {ethAmount} = this.state;
+
+    return (
+      <p>
+        <span>You will receive {LAB_COINT_PRICE * Number(ethAmount)} LABCoins</span>
+      </p>
+    )
+  }
+
   getStepContent(stepIndex) {
     switch (stepIndex) {
       case 0:
         return this.renderAmount();
       case 1:
-        return 'You will get 1000 LABCoin tokens';
+        return this.renderSummary();
       case 2: 
-        return 'Are you ready ro sumbit the transaction';
+        return 'Are you ready to sumbit the transaction';
     }
   }
 
   renderResetBox() {
     return (
       <div>
+        <p>Transaction successfully submitted</p>
         Check your 
         <a href="#"
           onClick={(event) => {
@@ -108,7 +121,7 @@ class PurchaseStepper extends Component {
             <StepLabel>Select The amount of ETH</StepLabel>
           </Step>
           <Step>
-            <StepLabel>Verify Transaction</StepLabel>
+            <StepLabel>Summary</StepLabel>
           </Step>
           <Step>
             <StepLabel>Confirmation</StepLabel>
