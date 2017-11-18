@@ -15,7 +15,7 @@ const purchaseTokens = async (web3, labCoinContract, ctx) => {
     ctx.body = {txnHash, address};
   }
   catch(error) {
-    ctx.body = HttpError(500, 'Error');
+    ctx.body = ctx.throw(500, 'error')
   }
 }
 
