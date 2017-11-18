@@ -7,12 +7,17 @@ import {
 import ArrowForwardIcon from 'material-ui/svg-icons/navigation/arrow-forward';
 import RaisedButton from 'material-ui/RaisedButton';
 import FlatButton from 'material-ui/FlatButton';
+import TextField from 'material-ui/TextField';
 
 class PurchaseStepper extends Component {
   state = {
     finished: false,
     stepIndex: 0,
   };
+
+  handleAmountChange = (e, value) => {
+    this.setState(Object.assign({}, {ethAmount: `${value}`}));
+  }
 
   handleNext = () => {
     const {stepIndex} = this.state;
@@ -29,10 +34,22 @@ class PurchaseStepper extends Component {
     }
   };
 
+  renderAmount() {
+    return (
+      <div>
+        <span>Select the amount of ETH you would like to exchange for LabCoin</span>
+        <TextField 
+          hintText='ETH'
+          value={this.state.ethAmount} 
+          onChange={this.handleAmountChange}/>
+      </div>
+    )
+  }
+
   getStepContent(stepIndex) {
     switch (stepIndex) {
       case 0:
-        return 'Select the amount of ETH you would like to exchange for LabCoin';
+        return this.renderAmount();
       case 1:
         return 'You will get 1000 LABCoin tokens';
       case 2: 
@@ -42,7 +59,7 @@ class PurchaseStepper extends Component {
 
   renderResetBox() {
     return (
-      <p>
+      <div>
         Check your 
         <a href="#"
           onClick={(event) => {
@@ -51,7 +68,7 @@ class PurchaseStepper extends Component {
           }}
         > Balance
         </a>
-      </p>
+      </div>
     )
   }
 
