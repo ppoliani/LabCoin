@@ -1,12 +1,12 @@
 const {purchaseTokens, getTokenBalance} = require('./tokenApi');
 const {partial} = require('../helpers/fn');
 const labCoinContract = require('../eth/contracts/LabCoinTokenContract');
-const web3 = require('../eth');
+const getWeb3 = require('../eth');
 
 const routes = {
   '/tokens/purchase': {
     method: 'post',
-    fn: partial(purchaseTokens, web3(), tokenContract())
+    fn: partial(purchaseTokens, getWeb3(), tokenContract())
   },
 
   '/tokens/balance': {

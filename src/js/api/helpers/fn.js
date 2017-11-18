@@ -4,5 +4,6 @@ Function.prototype['∘'] = function(f){
 }
 
 const partial = (fn, ...args) => (...restArgs) => fn.apply(this, args.concat(restArgs));
+const prop = key => obj => obj[key];
 
-module.exports = {partial}
+module.exports = {partial, prop}

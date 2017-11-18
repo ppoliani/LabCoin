@@ -10,18 +10,18 @@
   "license": "ISC",
   "dependencies": {
     "dotenv": "^4.0.0",
+    "folktale": "^2.0.1",
     "kcors": "^2.2.1",
     "koa": "^2.4.1",
     "koa-bodyparser": "^4.2.0",
     "koa-connect": "^2.0.0",
     "koa-router": "^7.3.0",
     "morgan": "^1.9.0",
-    "pify": "^3.0.0",
     "uws": "^8.14.1",
     "web3": "0.20.2",
     "winston": "^2.3.1"
   },
   "devDependencies": {
     "nodemon": "^1.12.1"
-  }1
+  }
 }
