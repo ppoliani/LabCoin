@@ -1,13 +1,14 @@
 const logger = require('../../helpers/logger');
 
-const logTransfer = (error, result) => {
+const logTransferListener = (error, result) => {
+  if(error) return logger.error(error);
   if(result.args.status) {
     logger.info(result)
   }
 }
 
 const listen = labCoinContract => {
-  labCoinContract.logFileAddedStatus().watch(logFileAddedStatusListener)
+  labCoinContract.LogTransfer().watch(logTransferListener)
 }
 
 module.exports = listen;

@@ -4,3 +4,5 @@ src/solidity/**/build
 tmp
 .DS_Store
 .vscode
+app.log
+**/*/app.log
