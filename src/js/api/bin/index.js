@@ -13,9 +13,8 @@ const setupRoutes = require('../core/routes');
 const logger = require('../helpers/logger');
 
 const app = new Koa();
-const router = setupRoutes(Router());
-
 applyMiddlewares(app);
+const router = setupRoutes(Router());
 
  app
   .use(router.routes())
