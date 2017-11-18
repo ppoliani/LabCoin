@@ -9,7 +9,7 @@ export default class Header extends Component {
   render() {
     return (
       <AppBar
-        title="Ehtereum Smart Contract"
+        title="Lab Coin"
         onLeftIconButtonTouchTap={() => {}}
         iconElementRight={<Button>Logout</Button>} />
     );

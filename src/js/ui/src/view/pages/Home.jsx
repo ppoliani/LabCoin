@@ -5,7 +5,7 @@ class Home extends Component {
   render() {
     return (
       <div className='page'>
-        <h1>Ethereum Proof Smart Contract</h1>
+        <h1>Lab Coin ICO</h1>
       </div>
     );
   }
