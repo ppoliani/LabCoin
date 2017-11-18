@@ -2,3 +2,4 @@
 **/node_modules
 src/solidity/**/build
 tmp
+.DS_Store
