@@ -3,14 +3,15 @@ const {HttpError} = require('../../core/api')
 const {getAccountPubKey} = require('../../helpers/account')
 
 const purchaseTokens = async (web3, labCoinContract, ctx) => {
-  const {amount} = ctx.request.body;
-  const sendTransaction = promisify(labCoinContract.set.sendTransaction);
+  const {value} = ctx.request.body;
+  const sendTransaction = promisify(labCoinContract.sendTransaction);
   const options = {
-    from: getAccountPubKey()
+    from: getAccountPubKey(),
+    value 
   }
 
   try{
-    const success = await sendTransaction(amount, options);
+    const success = await sendTransaction(options);
     ctx.body = {success};
   }
   catch(error) {
