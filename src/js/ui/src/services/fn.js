@@ -4,3 +4,4 @@ Function.prototype['∘'] = function(f){
 }
 
 export const partial = (fn, ...args) => (...restArgs) => fn.apply(this, args.concat(restArgs));
+export const noop = () => {}

@@ -16,7 +16,7 @@ export const purchaseTokensRoot = fetch => {
 }
 
 export const getBalanceRoot = fetch => {
-  const getUrl = pubKey => constructUrl(`${TOKEN_URL}/balance`, Map({pubKey}));
+  const getUrl = address => constructUrl(`${TOKEN_URL}/balance`, Map({address}));
   const fetchData = (fetch) ['∘'] (getUrl);
 
   return createAction(
