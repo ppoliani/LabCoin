@@ -1,4 +1,5 @@
 const LabCoin = artifacts.require('./LabCoinERC20.sol');
+const {ethertoWei, gweiToWei, toEther} = require('./utils');
 
 contract('LabCoinERC20', accounts => {
   it('should put 1000000 labcoins to the first account', async () => {
@@ -62,5 +63,26 @@ contract('LabCoinERC20', accounts => {
     assert.ok(txnResult);
     assert.equal(Number(balance), Number(recipientStartingBalance) + 1000, 'wrong balance for ICO participant');
     assert.equal(Number(supply), Number(initialSupply) + 1000, 'supply is not correct after the transaction')
+  });
+
+  it('should tranfer the ico participation eth amount to the owner of the contract', async () => {
+    const contractInst = await LabCoin.deployed();
+    const owner = accounts[0];
+    const value = web3.toWei(2, 'ether');
+    const icoParticipant = accounts[1];
+    const ownerStartingEthBalance = await web3.eth.getBalance(owner);
+    const icoParticipantcStartingEthBalance = await web3.eth.getBalance(icoParticipant);
+    const txnResult = await contractInst.sendTransaction({from: icoParticipant, value});
+    const gasUsed = Number(txnResult.receipt.cumulativeGasUsed) / 10000000;
+    const expenses = 2 + gasUsed;
+    const ownerCurrentEthBalance = await web3.eth.getBalance(owner);
+    const icoParticipantcCurrentEthBalance = await web3.eth.getBalance(icoParticipant);
+    const expectedOwnerBalance = toEther(ownerCurrentEthBalance);
+    const actualOwnerBalance = toEther(ownerStartingEthBalance) + 2;
+    const expectedIcoParticipantBalance = toEther(icoParticipantcCurrentEthBalance)
+    const actualIcoParticipantBalance = toEther(icoParticipantcStartingEthBalance) - expenses;
+
+    assert.equal(expectedOwnerBalance,  actualOwnerBalance, 'wrong owner eth balance after txn');
+    assert.equal(expectedIcoParticipantBalance, actualIcoParticipantBalance, 'wrong ico participant eth balance after txn');
   });
 });
