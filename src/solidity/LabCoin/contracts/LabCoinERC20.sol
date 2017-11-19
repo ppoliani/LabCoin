@@ -29,7 +29,7 @@ contract LabCoinERC20 is ERC20Interface, Owned {
     decimals = _decimals;
     name = _token;
     symbol = _symbol;
-    supply = _supply * 10 * decimals;
+    supply = _supply * 10 ** uint256(decimals);
     balanceOf[msg.sender] = supply;
     endTime = now + 1 weeks; // By default it is 1 week but we can change that later on
   }
