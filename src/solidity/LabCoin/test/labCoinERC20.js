@@ -49,4 +49,23 @@ contract('LabCoinERC20', accounts => {
         assert.equal(Number(recipientStartingBalance.valueOf()) + amount, recipientCurrentBalance.valueOf(), 'recipient has worng balance after the transfer');
       });
   }); 
+
+  it('should set the ending time of the ICO', () => {
+    const now = Number(new Date());
+    let nextSecond = new Date();
+    nextSecond.setSeconds(nextSecond.getSeconds() + 2);
+    nextSecond = Number(nextSecond);
+
+    return LabCoin.deployed()
+      .then(contractInst => {
+        return Promise.all([
+          contractInst.setEndtime(nextSecond),
+          contractInst.endTime()
+        ]);
+      })
+      .then(([result, endtime]) => {
+        assert.ok(result);
+        assert.equal(nextSecond, endtime.valueOf(), 'Failed to update the endtime')
+      })
+  });
 });
