@@ -12,7 +12,6 @@ contract LabCoinERC20 is ERC20Interface, Owned {
   uint256 public supply;
   uint256 public sellPrice;
   uint256 public buyPrice;
-  address public owner;
 
   // ICO related prop
   uint256 public endTime;
@@ -31,7 +30,6 @@ contract LabCoinERC20 is ERC20Interface, Owned {
     name = _token;
     symbol = _symbol;
     supply = _supply * 10 ** uint256(decimals);
-    owner = msg.sender;
     balanceOf[owner] = supply;
     endTime = now + 1 weeks; // By default it is 1 week but we can change that later on
   }
@@ -172,7 +170,7 @@ contract LabCoinERC20 is ERC20Interface, Owned {
     createTokens(msg.sender);
   }
 
-  function getICOPrice() public returns(uint256) {
+  function getICOPrice() public pure returns(uint256) {
     //TODO: add custom logic based on supply and demand
     // or maybe the current price of ETH
     return 500;

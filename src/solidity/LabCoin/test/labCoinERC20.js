@@ -85,4 +85,30 @@ contract('LabCoinERC20', accounts => {
     assert.equal(expectedOwnerBalance,  actualOwnerBalance, 'wrong owner eth balance after txn');
     assert.equal(expectedIcoParticipantBalance, actualIcoParticipantBalance, 'wrong ico participant eth balance after txn');
   });
+
+  it.only('should fail if ico period is over and someone wants to buy some tokens', async () => {
+    const now = Number(new Date());
+    let nextSecond = new Date();
+    nextSecond.setSeconds(nextSecond.getSeconds() + 1);
+    nextSecond = Number(nextSecond);
+
+    const icoParticipant = accounts[1];
+    const contractInst = await LabCoin.deployed();
+    const result = await contractInst.setEndtime(nextSecond);
+
+    // send the request after the ico ends
+    await new Promise((resolve, reject) => {
+      setTimeout(async () => {
+        try {
+          await contractInst.sendTransaction({from: icoParticipant, value: web3.toWei(2, 'ether')}); 
+          // it shouldn't reach this point;   
+          assert.fail('Expected to reject the transaction');
+        }
+        catch(error) {
+          assert.ok(true);
+        }
+        resolve();
+      }, 2000);
+    });
+  });
 });
