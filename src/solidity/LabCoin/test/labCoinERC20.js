@@ -15,6 +15,14 @@ contract('LabCoinERC20', accounts => {
     assert.equal(supply.valueOf(), 100000000, 'Wrong initial supply')
   });
 
+  it('should have the correct owner of the contract', async () => {
+    const contractInst = await LabCoin.deployed();
+    // By default it's the first account; the one that deployed the contract
+    const owner = await contractInst.owner();
+    
+    assert.equal(owner, accounts[0], 'Wrong owner')
+  });
+
   it('should transfer an amount of token from the sender to the recipient of a transaction', async () => {
     const amount = 1000;
     const sender = accounts[0];
@@ -44,8 +52,15 @@ contract('LabCoinERC20', accounts => {
     assert.equal(nextSecond, endtime.valueOf(), 'Failed to update the endtime')
   });
 
-  // it('should increase the supply of tokens when someone is participating in the ICO', async () => {
-  //   const constractInst = LabCoin.deployed();
-
-  // });
+  it('should increase the supply of tokens when someone is participating in the ICO', async () => {
+    const contractInst = await LabCoin.deployed();
+    const initialSupply = await contractInst.totalSupply();
+    const recipientStartingBalance = await contractInst.balanceOf(accounts[1]);
+    const txnResult = await contractInst.sendTransaction({from: accounts[1], value: web3.toWei(2, 'ether')});
+    const balance = await contractInst.balanceOf(accounts[1]);
+    const supply = await contractInst.totalSupply();
+    assert.ok(txnResult);
+    assert.equal(Number(balance), Number(recipientStartingBalance) + 1000, 'wrong balance for ICO participant');
+    assert.equal(Number(supply), Number(initialSupply) + 1000, 'supply is not correct after the transaction')
+  });
 });
